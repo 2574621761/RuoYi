@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysMeetingMapper">
+    <resultMap id="SysMeetingResponseVO" type="com.ruoyi.system.vo.SysMeetingResponseVO">
+        <id     property="meetingId"       column="meeting_id"        />
+        <result property="meetingTitle"     column="meeting_title"      />
+        <result property="meetingType"      column="meeting_type"       />
+        <result property="meetingContent"     column="meeting_content"      />
+        <result property="personal"     column="personal"    />
+    </resultMap>
+<select id="selectMeetings" parameterType="com.ruoyi.system.vo.SysMeetingRequestVO" resultType="com.ruoyi.system.domain.SysMeeting">
+    select meeting_id as meetingId,meeting_title as meetingTitle,meeting_type as meetingType,meeting_content as meetingContent
+    from sys_meeting
+<!--    <where>-->
+<!--        <if test="meetingTitle != null and meetingTitle != ''">-->
+<!--            AND meeting_title like concat('%', #{meetingTitle}, '%')-->
+<!--        </if>-->
+<!--&lt;!&ndash;        <if test="meetingType != null and meetingType != ''">&ndash;&gt;-->
+<!--&lt;!&ndash;            AND meeting_type = #{meetingType}&ndash;&gt;-->
+<!--&lt;!&ndash;        </if>&ndash;&gt;-->
+<!--&lt;!&ndash;        <if test="createBy != null and createBy != ''">&ndash;&gt;-->
+<!--&lt;!&ndash;            AND create_by like concat('%', #{createBy}, '%')&ndash;&gt;-->
+<!--&lt;!&ndash;        </if>&ndash;&gt;-->
+<!--    </where>-->
+    </select>
+
+    <insert id="insert" parameterType="com.ruoyi.system.vo.SysMeetingRequestVO">
+        insert into sys_meeting (
+        <if test="meetingTitle != null and meetingTitle != '' ">meeting_title, </if>
+        <if test="meetingType != null and meetingType != '' ">meeting_type, </if>
+        <if test="meetingContent != null and meetingContent != '' ">meeting_content, </if>
+<!--        <if test="status != null and status != '' ">status, </if>-->
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="meetingTitle != null and meetingTitle != ''">#{meetingTitle}, </if>
+        <if test="meetingType != null and meetingType != ''">#{meetingType}, </if>
+        <if test="meetingContent != null and meetingContent != ''">#{meetingContent}, </if>
+<!--        <if test="status != null and status != ''">#{status}, </if>-->
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+</mapper>
